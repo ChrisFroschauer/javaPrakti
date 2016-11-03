@@ -94,6 +94,7 @@ public class LimitedStringToIntMap extends HashMap<String, Integer> implements L
 			newest.add(key);
 		}else{
 			if(this.getLimit() == newest.size()){
+				super.remove(newest.get(0));
 				newest.remove(0); //wenn VOLL
 			}
 			newest.add(key); //immer auch wenn nicht voll
