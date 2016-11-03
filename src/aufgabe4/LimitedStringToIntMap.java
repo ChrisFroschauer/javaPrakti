@@ -89,8 +89,20 @@ public class LimitedStringToIntMap extends HashMap<String, Integer> implements L
 
 	@Override
 	public Integer put(String key, Integer value) {
+		if(this.containsKey(key)){//wenn key schon in der map ist
+			newest.remove(key); //update den key in der newest
+			newest.add(key);
+		}else{
+			if(this.getLimit() == newest.size()){
+				newest.remove(0); //wenn VOLL
+			}
+			newest.add(key); //immer auch wenn nicht voll
+		}
+		
+		return super.put(key, value);
+		
 		//ältesten entfernen!!
-		if (newest.size() >= capacity){ //wenn Liste voll ist
+		/*if (newest.size() >= capacity){ //wenn Liste voll ist
 			if(!newest.contains(key)){	
 				// den ältesten löschen, in die liste den neusten adden
 				this.remove(newest.get(0));
@@ -112,7 +124,7 @@ public class LimitedStringToIntMap extends HashMap<String, Integer> implements L
 			newest.add((String)key);
 		}
 
-		return super.put(key, value);
+		return super.put(key, value);*/
 	}
 
 	//WICHTIG NOCH ANPASSEN
