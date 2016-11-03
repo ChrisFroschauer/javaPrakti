@@ -250,11 +250,12 @@ public class LimitedMap_Chris_Test {
 		have.put("1", 1);
 		have.put("2", 2);
 		have.put("1", 1);
-		//maperino.put("3", 3);
+		//System.out.println(have);
+		
 		
 		LimitedMap want = new LimitedStringToIntMap(4);
-		have.put("2", 2);
-		have.put("1", 1);
+		want.put("2", 2);
+		want.put("1", 1);
 		
 		assertEquals(want, have);
 	}
