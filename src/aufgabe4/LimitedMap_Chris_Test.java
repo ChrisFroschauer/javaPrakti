@@ -145,12 +145,6 @@ public class LimitedMap_Chris_Test {
 		assertEquals(want, have);
 	}
 	
-	
-	
-	
-	
-	
-	
 	/**
 	 * putAll tests.
 	 */
@@ -158,7 +152,6 @@ public class LimitedMap_Chris_Test {
 	public void putAll_capacity_LessThan_InputMap_only_new_Entries_test(){
 		//Arange
 		LimitedMap want = create(11,15);
-		
 		LimitedMap insert = create(6,15);
 		//Act
 		map.putAll(insert);
@@ -184,11 +177,17 @@ public class LimitedMap_Chris_Test {
 		assertEquals(want,have);
 	}
 	
-	
-	
-	
-	
-	
+	/**
+	 * Tests if the insertion of an empty map changes anything in the tested map
+	 */
+	@Test
+	public void putAll_EmptyMap_Then_NoChange(){
+		LimitedMap lmap = new LimitedStringToIntMap(1); 
+		int size = map.size();
+		SetUp();
+		map.putAll(lmap);
+		assertEquals(size , map.size()); 
+	}
 	
 	/**
 	 * get tests.
@@ -220,12 +219,6 @@ public class LimitedMap_Chris_Test {
 		assertEquals(want, have);
 	}
 	
-	
-	
-	
-	
-	
-	
 	/**
 	 * put tests.
 	 */
@@ -255,25 +248,22 @@ public class LimitedMap_Chris_Test {
 	
 	@Test
 	public void put_notFull_sameKey_thenKeyNewest_test(){
-		LimitedMap have = new LimitedStringToIntMap(4);
+		LimitedMap have = new LimitedStringToIntMap(2);
 		have.put("1", 1);
 		have.put("2", 2);
 		have.put("1", 1);
-		//System.out.println(have);
+		have.put("3", 3);
+		System.out.println(have);
 		
 		
-		LimitedMap want = new LimitedStringToIntMap(4);
+		LimitedMap want = new LimitedStringToIntMap(2);
 		want.put("2", 2);
 		want.put("1", 1);
+		want.put("3", 3);
 		
+		System.out.println(want);
 		assertEquals(want, have);
 	}
-	
-	
-	
-	
-	
-	
 	
 	/**
 	 * remove tests.
