@@ -55,10 +55,7 @@ public class LimitedMap_Chris_Test {
 		LimitedMap want = new LimitedStringToIntMap(0);
 		
 		//assertEquals(want, have);
-		
 	}
-	
-	
 	
 	/**
 	 * clear tests.
@@ -107,18 +104,20 @@ public class LimitedMap_Chris_Test {
 		boolean have = map.containsKey("9");
 		assertFalse(have);
 	}
+	
+	/**
+	 * Hier hast du auch auf gleiche interne Struktur der LinkedLists vergleichen wollen.
+	 * Nur Verhalten testbar! :)
+	 */
 	@Test
 	public void containsKey_true_isNewest_test(){
-		//Arange
-		LimitedMap want = create(1, 5);
-		want.put("1", 1);
-		
-		//Act
-		map.containsKey("1");
-		LimitedMap have = map;
+		LimitedMap map = create(1, 2);
+		map.containsKey("1"); // Key wird geupdated und vorne an die LinkedList gehangen
+		map.put("3", 3); // Somit wird nun die zwei und nicht die eins gelöscht
+
 		
 		//Assert
-		assertEquals(want, have);
+		assertFalse(map.containsKey("2"));
 	}
 	@Test
 	public void containsKey_true_alreadyNewest_test(){
@@ -245,6 +244,13 @@ public class LimitedMap_Chris_Test {
 		//assert
 		assertEquals(want, have);
 	}
+	/**
+	 * assertEquals vergleicht die LinkedLists, die intern von LimitedStringToIntMap genutzt werden
+	 * nicht miteinander ;)
+	 * Deswegen kann man nur das Verhalten zweier LimitedLists vergleichen, welche zum selben Ergebnis führen.
+	 * Ich hab das mal so ausgebessert. Bei dir hätte ein Vertauschen der zwei want.put("...", ...) zu keinen
+	 * fehlschlagenden Test geführt!
+	 */
 	
 	@Test
 	public void put_notFull_sameKey_thenKeyNewest_test(){
@@ -253,15 +259,12 @@ public class LimitedMap_Chris_Test {
 		have.put("2", 2);
 		have.put("1", 1);
 		have.put("3", 3);
-		System.out.println(have);
-		
 		
 		LimitedMap want = new LimitedStringToIntMap(2);
 		want.put("2", 2);
 		want.put("1", 1);
 		want.put("3", 3);
 		
-		System.out.println(want);
 		assertEquals(want, have);
 	}
 	
@@ -280,14 +283,11 @@ public class LimitedMap_Chris_Test {
 		assertEquals(want, have);
 	}
 	
+	
 	@Test
 	public void remove_notInMap_test(){
 		assertNull(map.remove("9"));
 	}
-	
-	
-	
-	
 	
 	/**
 	 * getLimit tests.
