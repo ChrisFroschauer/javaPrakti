@@ -126,10 +126,11 @@ public class LimitedMap_Chris_Test {
 		
 		//Act
 		map.containsKey("5");
-		LimitedMap have = map;
+		map.put("6", 6);
 		
 		//Assert
-		assertEquals(want, have);
+		assertTrue(map.containsKey("5"));
+		assertFalse(map.containsKey("1"));
 	}
 	@Test
 	public void containsKey_false_mapEquals_test(){
