@@ -26,7 +26,7 @@ public class LimitedMap_Chris_Test {
 	}
 	
 	/**
-	 * SetUp vor jedem Test LimitedStringToIntMap mit 1-1 bis 5-5. Capazität: 5.
+	 * SetUp vor jedem Test LimitedStringToIntMap mit 1-1 bis 5-5. Kapazität: 5.
 	 */
 	@Before
 	public void SetUp(){
@@ -47,7 +47,16 @@ public class LimitedMap_Chris_Test {
 		@SuppressWarnings("unused")
 		LimitedMap map = new LimitedStringToIntMap(-1);
 	}
-	
+	@Test (expected=IllegalArgumentException.class)
+	public void constructor_zeroAsInput_nowPut_test(){
+		LimitedMap have = new LimitedStringToIntMap(0);
+		have.put("1", 1);
+		
+		LimitedMap want = new LimitedStringToIntMap(0);
+		
+		//assertEquals(want, have);
+		
+	}
 	
 	
 	

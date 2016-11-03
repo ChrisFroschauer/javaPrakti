@@ -48,7 +48,7 @@ public class LimitedStringToIntMap extends HashMap<String, Integer> implements L
 	 */
 	LimitedStringToIntMap(int capacity){
 		//super();
-		if(capacity < 0){
+		if(capacity <= 0){
 			//this.capacity = capacity * (-1);
 			throw new IllegalArgumentException("Capacity can't be negative");
 		}else{
