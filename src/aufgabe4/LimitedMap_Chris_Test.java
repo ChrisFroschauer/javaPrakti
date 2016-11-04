@@ -55,10 +55,7 @@ public class LimitedMap_Chris_Test {
 		LimitedMap want = new LimitedStringToIntMap(0);
 		
 		//assertEquals(want, have);
-		
 	}
-	
-	
 	
 	/**
 	 * clear tests.
@@ -107,18 +104,20 @@ public class LimitedMap_Chris_Test {
 		boolean have = map.containsKey("9");
 		assertFalse(have);
 	}
+	
+	/**
+	 * Hier hast du auch auf gleiche interne Struktur der LinkedLists vergleichen wollen.
+	 * Nur Verhalten testbar! :)
+	 */
 	@Test
 	public void containsKey_true_isNewest_test(){
-		//Arange
-		LimitedMap want = create(1, 5);
-		want.put("1", 1);
-		
-		//Act
-		map.containsKey("1");
-		LimitedMap have = map;
+		LimitedMap map = create(1, 2);
+		map.containsKey("1"); // Key wird geupdated und vorne an die LinkedList gehangen
+		map.put("3", 3); // Somit wird nun die zwei und nicht die eins gelöscht
+
 		
 		//Assert
-		assertEquals(want, have);
+		assertFalse(map.containsKey("2"));
 	}
 	@Test
 	public void containsKey_true_alreadyNewest_test(){
@@ -127,10 +126,11 @@ public class LimitedMap_Chris_Test {
 		
 		//Act
 		map.containsKey("5");
-		LimitedMap have = map;
+		map.put("6", 6);
 		
 		//Assert
-		assertEquals(want, have);
+		assertTrue(map.containsKey("5"));
+		assertFalse(map.containsKey("1"));
 	}
 	@Test
 	public void containsKey_false_mapEquals_test(){
@@ -145,12 +145,6 @@ public class LimitedMap_Chris_Test {
 		assertEquals(want, have);
 	}
 	
-	
-	
-	
-	
-	
-	
 	/**
 	 * putAll tests.
 	 */
@@ -158,7 +152,6 @@ public class LimitedMap_Chris_Test {
 	public void putAll_capacity_LessThan_InputMap_only_new_Entries_test(){
 		//Arange
 		LimitedMap want = create(11,15);
-		
 		LimitedMap insert = create(6,15);
 		//Act
 		map.putAll(insert);
@@ -184,11 +177,17 @@ public class LimitedMap_Chris_Test {
 		assertEquals(want,have);
 	}
 	
-	
-	
-	
-	
-	
+	/**
+	 * Tests if the insertion of an empty map changes anything in the tested map
+	 */
+	@Test
+	public void putAll_EmptyMap_Then_NoChange(){
+		LimitedMap lmap = new LimitedStringToIntMap(1); 
+		int size = map.size();
+		SetUp();
+		map.putAll(lmap);
+		assertEquals(size , map.size()); 
+	}
 	
 	/**
 	 * get tests.
@@ -220,12 +219,6 @@ public class LimitedMap_Chris_Test {
 		assertEquals(want, have);
 	}
 	
-	
-	
-	
-	
-	
-	
 	/**
 	 * put tests.
 	 */
@@ -252,28 +245,29 @@ public class LimitedMap_Chris_Test {
 		//assert
 		assertEquals(want, have);
 	}
+	/**
+	 * assertEquals vergleicht die LinkedLists, die intern von LimitedStringToIntMap genutzt werden
+	 * nicht miteinander ;)
+	 * Deswegen kann man nur das Verhalten zweier LimitedLists vergleichen, welche zum selben Ergebnis führen.
+	 * Ich hab das mal so ausgebessert. Bei dir hätte ein Vertauschen der zwei want.put("...", ...) zu keinen
+	 * fehlschlagenden Test geführt!
+	 */
 	
 	@Test
 	public void put_notFull_sameKey_thenKeyNewest_test(){
-		LimitedMap have = new LimitedStringToIntMap(4);
+		LimitedMap have = new LimitedStringToIntMap(2);
 		have.put("1", 1);
 		have.put("2", 2);
 		have.put("1", 1);
-		//System.out.println(have);
+		have.put("3", 3);
 		
-		
-		LimitedMap want = new LimitedStringToIntMap(4);
+		LimitedMap want = new LimitedStringToIntMap(2);
 		want.put("2", 2);
 		want.put("1", 1);
+		want.put("3", 3);
 		
 		assertEquals(want, have);
 	}
-	
-	
-	
-	
-	
-	
 	
 	/**
 	 * remove tests.
@@ -290,14 +284,11 @@ public class LimitedMap_Chris_Test {
 		assertEquals(want, have);
 	}
 	
+	
 	@Test
 	public void remove_notInMap_test(){
 		assertNull(map.remove("9"));
 	}
-	
-	
-	
-	
 	
 	/**
 	 * getLimit tests.

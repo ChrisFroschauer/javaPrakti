@@ -28,19 +28,6 @@ public class LimitedStringToIntMap extends HashMap<String, Integer> implements L
 	 */
 	private final int capacity;
 	
-	/**
-	 * Standard Capacity.
-	 */
-	private final int stancap = 5;
-	
-	/**
-	 * Standardkonstruktor limitiert die Map auf standard 10 Einträge.
-	 */
-	/*LimitedStringToIntMap(){
-		super();
-		capacity = stancap;
-		newest = new LinkedList<String>();
-	}*/
 	
 	/**
 	 * Limitiert Map zur size von capacity.
@@ -101,34 +88,8 @@ public class LimitedStringToIntMap extends HashMap<String, Integer> implements L
 		}
 		
 		return super.put(key, value);
-		
-		//ältesten entfernen!!
-		/*if (newest.size() >= capacity){ //wenn Liste voll ist
-			if(!newest.contains(key)){	
-				// den ältesten löschen, in die liste den neusten adden
-				this.remove(newest.get(0));
-				newest.add((String) key);
-				
-			}else{
-				//key zum neusten machen, in der map nix verändern
-				newest.remove(key);
-				newest.add(key);
-			}
-			
-		}else{ //wenn Liste noch nicht voll ist
-			if(!newest.contains(key)){			
-				if(newest.size()!=0)newest.remove(key);
-			}else{//key schon drin
-				//this.remove(newest.get(0));
-				this.containsKey(key);
-			}
-			newest.add((String)key);
-		}
-
-		return super.put(key, value);*/
 	}
 
-	//WICHTIG NOCH ANPASSEN
 	@Override
 	public void putAll(Map<? extends String, ? extends Integer> map) {
 		//soviele älteste wie map.size() entfernen. Was wenn map.size() größer als capacity?
